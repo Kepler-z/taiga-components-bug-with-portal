@@ -1,0 +1,63 @@
+<button tuiButton appearance="secondary" (click)="goToDefaultPage()" size="s">
+  Перейти обратно на дефолтную страницу
+</button>
+
+<h3>тут, например, пришли моковые данные по всем юзерам, проходившим тест в данном сеансе:</h3>
+
+<br />
+
+@for (division of mockUsersListData; track division.id) {
+  <h4>{{ division.shortName }} ({{ division.fullName }})</h4>
+  <ul>
+    @for (user of division.usersResults; track user.userId) {
+      <li>
+        <button
+          tuiButton
+          size="s"
+          appearance="secondary"
+          tuiDropdownHover
+          [tuiDropdown]="userResultsTpl"
+          (click)="
+            showUserTestStatisticsModal(userTestStatisticsTpl, getUserTestStatistics(user.userId), user.userName)
+          "
+        >
+          {{ user.userName }}
+        </button>
+      </li>
+    }
+  </ul>
+}
+
+<ng-template #userResultsTpl
+  >нажми для открытия модалки с резульатами данного юзера по ВСЕМ сеансам данного теста (то есть тест, если интересно,
+  может запускаться много раз и каждый раз = новый сеанс)</ng-template
+>
+
+<!-- ТЕМПЛЕЙТ МОДАЛКИ: -->
+<ng-template #userTestStatisticsTpl let-observer>
+  @let sessionsWithUserResults = currentUserTestStatisticsData();
+  @if (sessionsWithUserResults.length === 0) {
+    Нет информации по пользователю...
+  } @else {
+    @for (session of sessionsWithUserResults; track session.sessionId) {
+      <h5>Название сеанса: "{{ session.sessionName }}"</h5>
+      <ul>
+        @for (userAttempt of session.takesResults; track userAttempt.id) {
+          <li>
+            <span style="margin-right: 10px">баллов набрал: {{ userAttempt.points100 }}</span>
+            <button
+              tuiButton
+              size="s"
+              appearance="secondary"
+              tuiDropdownHover
+              tuiDropdown="Перекидывает на новый таб (созданный через cdk ПОРТАЛ), в котором более детальная информация по каждой попытке прохождения данного сеанса тестирования"
+              (click)="openUserDetailsTab(userAttempt.sessionName, userAttempt.sessionId, userAttempt.id)"
+            >
+              Посмотреть детальнее
+            </button>
+          </li>
+        }
+      </ul>
+    }
+  }
+</ng-template>

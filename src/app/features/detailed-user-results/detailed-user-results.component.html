@@ -1,0 +1,66 @@
+<tui-root>
+  <div class="section">
+    <h3>
+      При наведении на любой номер из пагинации (см. ниже) - не показывается tuiDropdownHover, хотя должен, учитывая
+      всунутый "paginationTemplate":
+    </h3>
+    <tui-pagination
+      [index]="currentIndex()"
+      [length]="totalItems()"
+      [content]="paginationTemplate"
+      (indexChange)="onPageChange($event)"
+    ></tui-pagination>
+
+    <ng-template #paginationTemplate let-index>
+      <span tuiDropdownHover [tuiDropdown]="getSessionNameByIndex(index)">
+        {{ index + 1 }}: {{ getUserNameByIndex(index) }}
+      </span>
+    </ng-template>
+
+    <div class="user-info-wrapper">
+      <p>
+        Заметьте, если в модалке с первой (родительской) страницы нажать "Посмотреть детальнее" напротив другой попытки,
+        то во-первых добавится новый индекс для пагинации (и, соответственно, он отобразится выше), а во-вторых - данные
+        снизу сами подменятся (этакая навигация как в браузере, но внутри одного окна)
+      </p>
+      <h3>инфа по данной попытке:</h3>
+      @if (userTestDetails(); as details) {
+        <div>
+          @if (userName(); as userName) {
+            <p>User: {{ userName }}</p>
+          }
+          <p>Points (100): {{ details.points100 }}</p>
+          <p>Points (5): {{ details.points5 }}</p>
+          <p>Duration: {{ details.duration }}</p>
+          <p>Right Answers: {{ details.rightAnswers }} / {{ details.tasksCount }}</p>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>Еще 2 примера, что не работают tuiDropdownHover:</h3>
+    <button
+      tuiDropdownHover
+      [tuiDropdown]="getSessionNameByIndex(0)"
+      tuiButton
+      size="s"
+      appearance="secondary"
+      style="margin-bottom: 10px"
+    >
+      даже при наведении на эту кнопку - не показывается дропдаун с именем сеанса
+    </button>
+    <div tuiDropdownHover [tuiDropdown]="content">и при наведении на меня тоже ничего не происходит, а должно</div>
+    <ng-template #content>Dropdown content</ng-template>
+  </div>
+
+  <div class="section">
+    <h3>Пример странно работающих модалок:</h3>
+
+    <button size="m" tuiButton type="button" (click)="showDialog()">Default button</button>
+
+    <p>
+      <button size="m" tuiButton type="button" (click)="showDialogWithCustomButton()">Custom button</button>
+    </p>
+  </div>
+</tui-root>
