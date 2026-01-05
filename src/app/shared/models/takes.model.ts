@@ -1,5 +1,5 @@
 import { PassingUpdateValue } from '@shared/interfaces/test-passing/passing-update-value.interface';
-import { TestTaskTypes } from '@eios/tests-common';
+import { TestTaskTypes } from '@shared/test-task-types.enum';
 import { Nullable } from '@shared/types/nullable.type';
 import { PassingAnswers } from '@shared/types/passing-asnwers.type';
 import { Uuid } from '@shared/types/uuid.type';
