@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "BROWSER='/Applications/Opera GX.app/Contents/MacOS/Opera' ng serve --open",
+    "start": "ng serve",
     "start:debug": "ng serve",
-    "nohmr": "BROWSER='/Applications/Opera GX.app/Contents/MacOS/Opera' ng serve --no-hmr --open",
+    "nohmr": "ng serve --no-hmr --open",
     "build": "ng build",
     "build:web": "ng build --configuration web",
     "watch": "ng build --watch --configuration development",
